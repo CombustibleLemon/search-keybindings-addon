@@ -1,0 +1,20 @@
+{
+
+  "manifest_version": 1,
+  "name": "Search Result Keybindings",
+  "version": "1.0",
+
+  "description": "Creates keybindings for Google and other search result pages",
+
+  "icons": {
+    "48": "icons/icon-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.google.com/search/?q*"],
+      "js": ["search-keybindings.js"]
+    }
+  ]
+
+}
