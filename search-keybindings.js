@@ -1,96 +1,106 @@
-var search-keybindings-resultLinks;
-var search-keybindings-currentIndex;
-var search-keybindings-searchBar;
-var search-keybindings-keyUp;
-var search-keybindings-keyDown;
-var search-keybindings-keySearch;
-var search-keybindings-keyEsc = 27;
-var search-keybindings-keyHigh = 72;
-var search-keybindings-keyMiddle = 77;
-var search-keybindings-keyLow = 76;
+var search_keybindings_resultLinks;
+var search_keybindings_currentIndex;
+var search_keybindings_searchBar;
+var search_keybindings_keyUp = 75;
+var search_keybindings_keyDown = 74;
+var search_keybindings_keySearch = 191;
+var search_keybindings_keyEsc = 27;
+var search_keybindings_keyHigh = 72;
+var search_keybindings_keyMiddle = 78;
+var search_keybindings_keyLow = 76;
+
+console.log("Search_Keybindings loaded");
 
 function selectResult(resultNum) {
-	search-keybindings-resultLinks[resultNum].focus();
+	search_keybindings_resultLinks[resultNum].focus();
 }
-	
 
 function indexResults() {
 	var resultListPane = document.getElementById("rso");
 	var resultList = resultListPane.getElementsByClassName("h3");
 
-	search-keybindings-resultLinks = resultList.getElementByTagName("a");
-	search-keybindings-searchBar = document.getElementById("lst-ib");
+	search_keybindings_resultLinks = resultList.getElementByTagName("a");
+	console.log(search_keybindings_resultLinks);
+	search_keybindings_searchBar = document.getElementById("lst-ib");
 }
 
 function moveUp() {
-	if (search-keybindings-currentIndex < 0) {
+	if (search_keybindings_currentIndex < 0) {
 		return;
 	}
 
-	search-keybindings-currentIndex--;
-	selectResult(search-keybindings-currentIndex);
+	search_keybindings_currentIndex--;
+	selectResult(search_keybindings_currentIndex);
 }
 
 function moveDown() {
-	if (search-keybindings-currentIndex >= search-keybindings-resultLinks.length) {
+	if (search_keybindings_currentIndex >= search_keybindings_resultLinks.length) {
 		return;
 	}
 
-	search-keybindings-currentIndex++;
-	selectResult(search-keybindings-currentIndex);
+	search_keybindings_currentIndex++;
+	selectResult(search_keybindings_currentIndex);
 }
 
 function moveHigh() {
-	search-keybindings-currentIndex = 0;
-	selectResult(search-keybindings-currentIndex);
+	search_keybindings_currentIndex = 0;
+	selectResult(search_keybindings_currentIndex);
 }
 
 function moveMiddle() {
-	var mid = Math.floor(search-keybindings-resultLinks.length / 2)
+	var mid = Math.floor(search_keybindings_resultLinks.length / 2)
 
-	search-keybindings-currentIndex = mid;
-	selectResult(search-keybindings-currentIndex);
+	search_keybindings_currentIndex = mid;
+	selectResult(search_keybindings_currentIndex);
 }
 
 function moveLoLow() {
-	search-keybindings-currentIndex = search-keybindings-resultLinks.length - 1;
-	selectResult(search-keybindings-currentIndex);
+	search_keybindings_currentIndex = search_keybindings_resultLinks.length - 1;
+	selectResult(search_keybindings_currentIndex);
 }
 
 function selectSearchBar() {
-	search-keybindings-searchBar.focus();
+	search_keybindings_searchBar.focus();
 }
 
 function escapeSearchBar() {
-	selectResult(search-keybindings-currentIndex);
+	selectResult(search_keybindings_currentIndex);
 }
 
 window.addEventListener("keydown", checkKeyPressed, false);
  
 function checkKeyPressed(e) {
+	console.log("Key " + e.keyCode + " pressed.");
+
 	switch (e.keyCode) {
-		case search-keybindings-keyDown:
+		case search_keybindings_keyDown:
+			console.log("└ Key matches down key.");
 			moveDown();
 			break;
-		case search-keybindings-keyUp:
+		case search_keybindings_keyUp:
+			console.log("└ Key matches up key.");
 			moveUp();
 			break;
-		case search-keybindings-keySearch:
+		case search_keybindings_keySearch:
+			console.log("└ Key matches search key.");
 			selectSearchBar();
 			break;
-		case search-keybindings-keyEsc:
+		case search_keybindings_keyEsc:
+			console.log("└ Key matches escape key.");
 			escapeSearchBar();
 			break;
-		case search-keybindings-keyHigh:
+		case search_keybindings_keyHigh:
+			console.log("└ Key matches high key.");
 			moveHigh();
 			break;
-		case search-keybindings-keyMiddle:
+		case search_keybindings_keyMiddle:
+			console.log("└ Key matches middle key.");
 			moveMiddle();
 			break;
-		case search-keybindings-keyLow:
+		case search_keybindings_keyLow:
+			console.log("└ Key matches low key.");
 			moveLow();
 			break;
 	}
 }
 
-window.onload = indexResults;
