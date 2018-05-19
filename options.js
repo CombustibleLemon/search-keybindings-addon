@@ -1,19 +1,25 @@
 function saveOptions(e) {
 	e.preventDefault();
-	browser.storage.local.set{{
-		keyDown: document.querySelector("#keyDown").value
-		keyUp: document.querySelector("#keyUp").value
+	browser.storage.local.set({
+		keyDown: document.querySelector("#keyDown").value,
+		keyUp: document.querySelector("#keyUp").value,
 		keySearchBar: document.querySelector("#keySearchBar").value
-	}};
+	});
 }
 
 function restoreOptions() {
+	var keyDown = browser.storage.local.get("keyDown");
+	var keyUp = browser.storage.local.get("keyUp");
+	var keySearchBar = browser.storage.local.get("keySearchBar");
+
+	console.log({keyDown, keyUp, keySearchBar});
+
 	document.querySelector("#keyDown").value =
-		browser.storage.local.get("keyDown").toUpper() || "J";
+		keyDown || "J";
 	document.querySelector("#keyUp").value =
-		browser.storage.local.get("keyUp").toUpper() || "K";
+		keyUp || "K";
 	document.querySelector("#keySearchBar").value =
-		browser.storage.local.get("keySearchBar").toUpper() || "/";
+		keySearchBar || "/";
 
 	function onError(error) {
 		console.log('Error: ${Error}');
