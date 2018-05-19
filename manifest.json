@@ -15,6 +15,12 @@
       "matches": ["*://*.google.com/search/?q*"],
       "js": ["search-keybindings.js"]
     }
-  ]
+  ],
 
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "permissions": ["storage"]
 }
