@@ -11,7 +11,7 @@
 
   "content_scripts": [
     {
-      "matches": ["*://*.google.com/search/?q*"],
+      "matches": ["*://*.google.com/search*"],
       "js": ["search-keybindings.js"]
     }
   ],
