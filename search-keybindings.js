@@ -9,7 +9,7 @@ var search_keybindings_keyHigh = 72;
 var search_keybindings_keyMiddle = 78;
 var search_keybindings_keyLow = 76;
 
-console.log("Search_Keybindings loaded");
+console.log("Search_Keybindings initialized");
 
 function selectResult(resultNum) {
 	search_keybindings_resultLinks[resultNum].focus();
@@ -130,14 +130,14 @@ document.addEventListener("DOMContentLoaded", indexResults()) {
 });
 */
 {
-let resultListPane = document.getElementById("rso");
-let resultList = resultListPane.getElementsByTagName("h3");
+let resultListPane = document.getElementById(search_keybindings_siteMappingDictionary.get("sr-pane"));
+let resultList = resultListPane.getElementsByTagName(search_keybindings_siteMappingDictionary.get("sr-hTag"));
 
 for (var i = 0, len = resultList.length; i < len; i++) {
-	search_keybindings_resultLinks.push(resultList[i].getElementsByTagName("a")[0]);
+	search_keybindings_resultLinks.push(resultList[i].getElementsByTagName(search_keybindings_siteMappingDictionary.get("sr-linkTag"))[0]);
 }
 
 console.log(search_keybindings_resultLinks);
-search_keybindings_searchBar = document.getElementById("lst-ib");
+search_keybindings_searchBar = document.getElementById(search_keybindings_siteMappingDictionary.get("search-bar"));
 }
 

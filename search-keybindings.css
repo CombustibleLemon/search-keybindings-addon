@@ -1,4 +1,4 @@
-.r a:focus::before {
+h2 a:focus::before, h3 a:focus::before {
 	content: '\25BA';
 	position: absolute;
 	top: 4px;
