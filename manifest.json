@@ -12,7 +12,8 @@
   "content_scripts": [
     {
       "matches": ["*://*.google.com/search*"],
-      "js": ["search-keybindings.js"]
+      "js": ["search-keybindings.js"],
+      "css": ["search-keybindings.css"]
     }
   ],
 
