@@ -21,12 +21,5 @@
       "js": ["search-keybindings-searchSiteMappings.js", "search-keybindings.js"],
       "css": ["search-keybindings.css"]
     }
-  ],
-
-
-  "options_ui": {
-    "page": "options.html"
-  },
-
-  "permissions": ["storage"]
+  ]
 }
