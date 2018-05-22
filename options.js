@@ -1,43 +1,55 @@
+var keyInputs = document.querySelectorAll("#search_keybindings_settings input[type=number]");
+
 function saveOptions(e) {
-	e.preventDefault();
-	browser.storage.local.set({
-		keyDown: document.querySelector("#keyDown").value,
-		keyUp: document.querySelector("#keyUp").value,
-		keySearchBar: document.querySelector("#keySearchBar").value
-	});
+    e.preventDefault();
+
+    for (i = 0; i < keyInputs.length; i++) {
+        chrome.storage.local.set(
+            keyInputs[i].id, keyInputs[i].value
+        )
+    }
 }
 
 function restoreOptions() {
-	let keyDown = browser.storage.local.get("keyDown");
-	let keyUp = browser.storage.local.get("keyUp");
-	let keySearchBar = browser.storage.local.get("keySearchBar");
-
-	console.log({keyDown, keyUp, keySearchBar});
-
-	document.querySelector("#keyDown").value =
-		keyDown || "74";
-	document.querySelector("#keyUp").value =
-		keyUp || "75";
-	document.querySelector("#keySearchBar").value =
-		keySearchBar || "191";
-
-	function onError(error) {
-		console.log('Error: ${Error}');
-	}
+    for (i = 0; i < keyInputs.length; i++) {
+        keyInputs[i].value = search_keybindings_getKeyBinding(keyInputs[i].id);
+    }
 }
 
 function checkKeyPressed(e) {
-	console.log("Key " e.keyCode + " pressed.");
+    console.log("Key " +
+        e.keyCode + " pressed.");
 
-	this.value = e.keyCode;
+    this.parentElement.parentElement.querySelector("input[type=number]").value = e.keyCode;
+    this.removeEventListener("keydown");
 }
 
-document.addEventListener("DOMContentLoaded", restoreOptions);
-
-var inputs = document.getElementsByTagName("input");
-for (int i = 0; i < inputs.length; i++) {
-	inputs[i].addEventListener("keydown" checkKeyPressed, false)
+function btnClick(e) {
+    this.addEventListener("keydown",
+        checkKeyPressed, false);
 }
+
+function manualKeyCodes(e) {
+    if (this.checked) {
+        for (i = 0; i < keyInputs.length; i++) {
+            keyInputs[i].removeAttribute("readonly");
+        }
+    } else {
+        for (i = 0; i < keyInputs.length; i++) {
+            keyInputs[i].setAttribute("readonly", "readonly");
+        }
+    }
+}
+
+var readerButtons = document.querySelectorAll(".input-group-prepend button");
+for (i = 0; i < readerButtons.length; i++) {
+    readerButtons[i].addEventListener("click",
+        btnClick, false)
+}
+
+document.getElementById("manualKeyCodes").addEventListener(
+    "change", manualKeyCodes, false
+);
 
 document.querySelector("form").addEventListener("submit", saveOptions);
-
+document.addEventListener("DOMContentLoaded", restoreOptions);
