@@ -1,9 +1,3 @@
-/*
- * This file contains the Map of word --> emoji substitutions.
- */
-
-/* exported sortedEmojiMap */
-
 var search_keybindings_siteMappingDictionary = new Map();
 search_keybindings_siteMappingDictionary.set("search-bar", null);
 search_keybindings_siteMappingDictionary.set("sr-pane", null);

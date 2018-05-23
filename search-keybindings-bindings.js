@@ -1,33 +1,56 @@
-var search_keybindings_defaults = new Map();
-search_keybindings_defaults.set("keyDown", 74);
-search_keybindings_defaults.set("keyUp", 75);
-search_keybindings_defaults.set("keySearchBar", 191);
-search_keybindings_defaults.set("keyEsc", 27);
-search_keybindings_defaults.set("keyHigh", 72);
-search_keybindings_defaults.set("keyMiddle", 78);
-search_keybindings_defaults.set("keyLow", 76);
+/**
+ * Default keybindings, based on Vim
+ * @constant
+ * @default
+ */
+var search_keybindings_defaults = new Map([
+    ["keyDown", 74],
+    ["keyUp", 75],
+    ["keySearchBar", 191],
+    ["keyEsc", 27],
+    ["keyHigh", 72],
+    ["keyMiddle", 78],
+    ["keyLow", 76]
+]);
 
+/**
+ * User-specified settings
+ */
 var search_keybindings_userSettings = new Map();
 
-/*
-for (i = 0; i < search_keybindings_defaults.size; i++) {
-    let keyName = search_keybindings_defaults[i].
-}
-*/
-
-//for (var key in search_keybindings_defaults) {
-//Object.keys(search_keybindings_defaults).forEach(function(key) {
+/** @private */
 search_keybindings_defaults_iterator = search_keybindings_defaults.keys();
 
+/**
+ * Intended to retrieve settings from storage and record in search_keybindings_userSettings
+ */
 while (search_keybindings_userSettings.size < search_keybindings_defaults.size) {
-    let key = search_keybindings_defaults_iterator.next().value;
-    let val = chrome.storage.local.get(key) || null;
+    var key;
+    var keyNum;
+    var val;
+    //let key = search_keybindings_defaults_iterator.next().value;
+
+    chrome.storage.local.get(null, function(items) {
+        Object.keys(items).forEach(function(objKey, index) {
+            search_keybindings_userSettings.set(objKey, items[index].key);
+            // key: the name of the object key
+            // index: the ordinal position of the key within the object 
+        });
+    });
+
+    val = keyNum || null;
     search_keybindings_userSettings.set(key, val);
     console.log("Read " + val + " for " + key);
 }
 
-console.log(delete search_keybindings_defaults_iterator);
+delete search_keybindings_defaults_iterator;
 
+/**
+ * Retrieves keycode from storage or from defaults if storage is null
+ * 
+ * @param {string} key Name of key behavior to retrieve binding for
+ * @returns {number} Keycode of requested key
+ */
 function search_keybindings_getKeyBinding(key) {
     try {
         var userKey = search_keybindings_userSettings.get(key);

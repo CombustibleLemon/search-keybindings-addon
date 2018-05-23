@@ -1,5 +1,8 @@
+/**
+ * Array of link elements in DOM that make up main search results 
+ */
 var search_keybindings_resultLinks = [];
-var search_keybindings_currentIndex = 0;
+var search_keybindings_currentIndex = -1;
 var search_keybindings_searchBar;
 var search_keybindings_keyDown = search_keybindings_getKeyBinding("keyDown");
 var search_keybindings_keyUp = search_keybindings_getKeyBinding("keyUp");
@@ -15,6 +18,9 @@ function selectResult(resultNum) {
     search_keybindings_resultLinks[resultNum].focus();
 }
 
+/**
+ * Activate preceding search result. Does nothing if currently at top.
+ */
 function moveUp() {
     if (search_keybindings_currentIndex <= 0) {
         console.log("└ EOL");
@@ -26,6 +32,9 @@ function moveUp() {
     selectResult(search_keybindings_currentIndex);
 }
 
+/**
+ * Activate following search result. Does nothing if currently at bottom.
+ */
 function moveDown() {
     if (search_keybindings_currentIndex >= search_keybindings_resultLinks.length - 1) {
         console.log("└ EOL");
@@ -38,6 +47,9 @@ function moveDown() {
     selectResult(search_keybindings_currentIndex);
 }
 
+/**
+ * Activate top search result.
+ */
 function moveHigh() {
     console.log("│ current index is " + search_keybindings_currentIndex);
     search_keybindings_currentIndex = 0;
@@ -45,6 +57,9 @@ function moveHigh() {
     selectResult(search_keybindings_currentIndex);
 }
 
+/**
+ * Activate search result midway between bottom and top.
+ */
 function moveMiddle() {
     console.log("│ current index is " + search_keybindings_currentIndex);
     var mid = Math.floor(search_keybindings_resultLinks.length / 2)
@@ -54,6 +69,9 @@ function moveMiddle() {
     selectResult(search_keybindings_currentIndex);
 }
 
+/**
+ * Activate bottom search result.
+ */
 function moveLow() {
     console.log("│ current index is " + search_keybindings_currentIndex);
     search_keybindings_currentIndex = search_keybindings_resultLinks.length - 1;
@@ -61,6 +79,9 @@ function moveLow() {
     selectResult(search_keybindings_currentIndex);
 }
 
+/**
+ * Activate search bar for text entry.
+ */
 function selectSearchBar() {
     search_keybindings_searchBar.focus();
     console.log("└ targeting search bar");
@@ -75,6 +96,10 @@ function escapeSearchBar() {
 
 window.addEventListener("keydown", checkKeyPressed, false);
 
+/**
+ * Identifies keycode of pressed key and runs specified procedure
+ * @param {Event} e Keydown event
+ */
 function checkKeyPressed(e) {
     console.log("Key " + e.keyCode + " pressed.");
 
