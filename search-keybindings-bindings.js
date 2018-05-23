@@ -25,22 +25,21 @@ search_keybindings_defaults_iterator = search_keybindings_defaults.keys();
  * Intended to retrieve settings from storage and record in search_keybindings_userSettings
  */
 while (search_keybindings_userSettings.size < search_keybindings_defaults.size) {
-    var key;
+    var keyTarget = search_keybindings_defaults_iterator.next().value;
     var keyNum;
     var val;
-    //let key = search_keybindings_defaults_iterator.next().value;
 
-    chrome.storage.local.get(null, function(items) {
+    chrome.storage.local.get(keyTarget, function(items) {
         Object.keys(items).forEach(function(objKey, index) {
-            search_keybindings_userSettings.set(objKey, items[index].key);
-            // key: the name of the object key
-            // index: the ordinal position of the key within the object 
+            let k = items[objKey];
+            console.log(k);
+            keyNum = k.key;
         });
     });
 
     val = keyNum || null;
-    search_keybindings_userSettings.set(key, val);
-    console.log("Read " + val + " for " + key);
+    search_keybindings_userSettings.set(keyTarget, val);
+    console.log("Read " + val + " for " + keyTarget);
 }
 
 delete search_keybindings_defaults_iterator;
