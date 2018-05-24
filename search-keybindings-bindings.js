@@ -4,13 +4,13 @@
  * @default
  */
 var search_keybindings_defaults = new Map([
-    ["keyDown", 74],
-    ["keyUp", 75],
-    ["keySearchBar", 191],
-    ["keyEsc", 27],
-    ["keyHigh", 72],
-    ["keyMiddle", 78],
-    ["keyLow", 76]
+    ["keyDown", "j"],
+    ["keyUp", "k"],
+    ["keySearchBar", "/"],
+    ["keyEsc", "escape"],
+    ["keyHigh", "h"],
+    ["keyMiddle", "m"],
+    ["keyLow", "l"]
 ]);
 
 /**
@@ -18,45 +18,56 @@ var search_keybindings_defaults = new Map([
  */
 var search_keybindings_userSettings = new Map();
 
-/** @private */
-search_keybindings_defaults_iterator = search_keybindings_defaults.keys();
+//search_keybindings_defaults_iterator = search_keybindings_defaults.keys();
 
 /**
  * Intended to retrieve settings from storage and record in search_keybindings_userSettings
  */
+/*
 while (search_keybindings_userSettings.size < search_keybindings_defaults.size) {
     var keyTarget = search_keybindings_defaults_iterator.next().value;
     var keyNum;
     var val;
-
-    chrome.storage.local.get(keyTarget, function(items) {
-        Object.keys(items).forEach(function(objKey, index) {
-            let k = items[objKey];
-            console.log(k);
-            keyNum = k.key;
-        });
-    });
-
     val = keyNum || null;
     search_keybindings_userSettings.set(keyTarget, val);
     console.log("Read " + val + " for " + keyTarget);
 }
+*/
 
-delete search_keybindings_defaults_iterator;
+//delete search_keybindings_defaults_iterator;
+
+chrome.storage.local.get(null, function(items) {
+    Object.keys(items).forEach(function(objKey, index) {
+        var k = items[objKey];
+        if (k.enabled) {
+            let val = k.key
+            console.log("Read " + val + " for " + objKey);
+            search_keybindings_userSettings.set(objKey, val);
+        } else {
+            console.log("Key " + objKey + " disabled");
+            search_keybindings_userSettings.set(objKey, -1);
+        }
+
+    });
+});
 
 /**
  * Retrieves keycode from storage or from defaults if storage is null
  * 
  * @param {string} key Name of key behavior to retrieve binding for
+ * @param {boolean} [defaults] True if requesting default, false if requesting user-specified
  * @returns {number} Keycode of requested key
  */
-function search_keybindings_getKeyBinding(key) {
-    try {
-        var userKey = search_keybindings_userSettings.get(key);
-        console.log("User setting: " + key + " is " + userKey);
-        var defaultKey = search_keybindings_defaults.get(key);
-    } catch (error) {
-        throw "Setting " + key + " not recorded as an option";
+function search_keybindings_getKeyBinding(key, defaults) {
+    var userKey = search_keybindings_userSettings.get(key);
+    var defaultKey = search_keybindings_defaults.get(key);
+
+    if (defaults !== undefined) {
+        if (defaults) {
+            return defaultKey;
+        } else {
+            return userKey;
+        }
     }
 
     if (userKey != null) {

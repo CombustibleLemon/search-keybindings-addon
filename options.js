@@ -1,4 +1,4 @@
-var keyInputs = document.querySelectorAll("#search_keybindings_settings input[type=number]");
+var keyInputs = document.querySelectorAll("#search_keybindings_settings input[type=text]");
 
 /**
  * Record form into browser storage
@@ -10,30 +10,51 @@ function saveOptions(e) {
     var settings = new Object();
 
     for (i = 0; i < keyInputs.length; i++) {
-        settings[keyInputs[i].id] = { enabled: true, key: keyInputs[i].value };
+        let chk = keyInputs[i].parentElement.querySelector("input[type=checkbox]");
+        var bChk = false;
+        if (chk.checked) {
+            bChk = true;
+        }
+        settings[keyInputs[i].id] = {
+            enabled: bChk,
+            key: keyInputs[i].value.toLowerCase()
+        };
     }
 
     chrome.storage.local.set(settings);
+    chrome.storage.local.set({ version: 1.0 });
+    console.log("Recorded settings.");
 }
 
 /**
- * Pull keybindings from user storage and fill form with keycodes
+ * Pull keybindings from user storage and fill form with key values
  */
 function restoreOptions() {
     for (i = 0; i < keyInputs.length; i++) {
-        keyInputs[i].value = search_keybindings_getKeyBinding(keyInputs[i].id);
+        //keyInputs[i].value = search_keybindings_getKeyBinding(keyInputs[i].id);
+        document.getElementById(keyInputs[i].id + "-default").innerHTML =
+            search_keybindings_getKeyBinding(keyInputs[i].id, true);
     }
 }
 
 /**
- * Record keypress and fill corresponding input field with keycode
+ * Restores default values
+ */
+function restoreDefaults() {
+    for (i = 0; i < keyInputs.length; i++) {
+        keyInputs[i].value = search_keybindings_getKeyBinding(keyInputs[i].id, true);
+    }
+}
+
+/**
+ * Record keypress and fill corresponding input field with key value
  * @param {Event} e Keydown event
  */
 function checkKeyPressed(e) {
     console.log("Key " +
         e.keyCode + " pressed.");
 
-    this.parentElement.parentElement.querySelector("input[type=number]").value = e.keyCode;
+    this.parentElement.parentElement.querySelector("input[type=text]").value = e.key;
     this.removeEventListener("keydown");
 }
 
@@ -47,7 +68,7 @@ function btnClick(e) {
 }
 
 /**
- * Enable or disable manual entry of keycodes
+ * Enable or disable manual entry of key values
  * @param {Event} e Checkbox change event
  */
 function manualKeyCodes(e) {
@@ -68,9 +89,37 @@ for (i = 0; i < readerButtons.length; i++) {
         btnClick, false)
 }
 
+/*
 document.getElementById("manualKeyCodes").addEventListener(
     "change", manualKeyCodes, false
+);
+*/
+
+document.getElementById("restore-defaults").addEventListener(
+    "click", restoreDefaults, false
 );
 
 document.querySelector("form").addEventListener("submit", saveOptions);
 document.addEventListener("DOMContentLoaded", restoreOptions);
+
+let test = new Promise(() => {
+    var optionKeys = [];
+
+    keyInputs.forEach(element => {
+        optionKeys.push(element.id);
+    });
+
+    chrome.storage.local.get(optionKeys, function(items) {
+        Object.keys(items).forEach(function(objKey, index) {
+            var k = items[objKey];
+            let val = k.key
+            var input = document.getElementById(objKey);
+            console.log("Read " + val + " for " + objKey);
+            input.value = val;
+
+            if (k.enabled) {
+                input.parentElement.querySelector("input[type=checkbox]").setAttribute("checked", "checked");
+            }
+        });
+    });
+});

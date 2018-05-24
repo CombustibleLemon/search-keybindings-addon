@@ -1,21 +1,14 @@
 /**
- * Array of link elements in DOM that make up main search results 
+ * Array of link elements in DOM that make up main search results
  */
-var search_keybindings_resultLinks = [];
-var search_keybindings_currentIndex = -1;
-var search_keybindings_searchBar;
-var search_keybindings_keyDown = search_keybindings_getKeyBinding("keyDown");
-var search_keybindings_keyUp = search_keybindings_getKeyBinding("keyUp");
-var search_keybindings_keySearchBar = search_keybindings_getKeyBinding("keySearchBar");
-var search_keybindings_keyEsc = search_keybindings_getKeyBinding("keyEsc");
-var search_keybindings_keyHigh = search_keybindings_getKeyBinding("keyHigh");
-var search_keybindings_keyMiddle = search_keybindings_getKeyBinding("keyMiddle");
-var search_keybindings_keyLow = search_keybindings_getKeyBinding("keyLow");
+var search_keybindings_resultLinks = []
+var search_keybindings_currentIndex = -1
+var search_keybindings_searchBar
 
-console.log("Search_Keybindings initialized");
+console.log('Search_Keybindings initialized')
 
 function selectResult(resultNum) {
-    search_keybindings_resultLinks[resultNum].focus();
+    search_keybindings_resultLinks[resultNum].focus()
 }
 
 /**
@@ -23,13 +16,13 @@ function selectResult(resultNum) {
  */
 function moveUp() {
     if (search_keybindings_currentIndex <= 0) {
-        console.log("└ EOL");
-        return;
+        console.log('└ EOL')
+        return
     }
-    console.log("│ current index is " + search_keybindings_currentIndex);
-    search_keybindings_currentIndex--;
-    console.log("└ targeting " + search_keybindings_currentIndex);
-    selectResult(search_keybindings_currentIndex);
+    console.log('│ current index is ' + search_keybindings_currentIndex)
+    search_keybindings_currentIndex--
+    console.log('└ targeting ' + search_keybindings_currentIndex)
+    selectResult(search_keybindings_currentIndex)
 }
 
 /**
@@ -37,54 +30,54 @@ function moveUp() {
  */
 function moveDown() {
     if (search_keybindings_currentIndex >= search_keybindings_resultLinks.length - 1) {
-        console.log("└ EOL");
-        return;
+        console.log('└ EOL')
+        return
     }
 
-    console.log("│ current index is " + search_keybindings_currentIndex);
-    search_keybindings_currentIndex++;
-    console.log("└ targeting " + search_keybindings_currentIndex);
-    selectResult(search_keybindings_currentIndex);
+    console.log('│ current index is ' + search_keybindings_currentIndex)
+    search_keybindings_currentIndex++
+    console.log('└ targeting ' + search_keybindings_currentIndex)
+    selectResult(search_keybindings_currentIndex)
 }
 
 /**
  * Activate top search result.
  */
 function moveHigh() {
-    console.log("│ current index is " + search_keybindings_currentIndex);
-    search_keybindings_currentIndex = 0;
-    console.log("└ targeting " + search_keybindings_currentIndex);
-    selectResult(search_keybindings_currentIndex);
+    console.log('│ current index is ' + search_keybindings_currentIndex)
+    search_keybindings_currentIndex = 0
+    console.log('└ targeting ' + search_keybindings_currentIndex)
+    selectResult(search_keybindings_currentIndex)
 }
 
 /**
  * Activate search result midway between bottom and top.
  */
 function moveMiddle() {
-    console.log("│ current index is " + search_keybindings_currentIndex);
+    console.log('│ current index is ' + search_keybindings_currentIndex)
     var mid = Math.floor(search_keybindings_resultLinks.length / 2)
 
-    search_keybindings_currentIndex = mid;
-    console.log("└ targeting " + search_keybindings_currentIndex);
-    selectResult(search_keybindings_currentIndex);
+    search_keybindings_currentIndex = mid
+    console.log('└ targeting ' + search_keybindings_currentIndex)
+    selectResult(search_keybindings_currentIndex)
 }
 
 /**
  * Activate bottom search result.
  */
 function moveLow() {
-    console.log("│ current index is " + search_keybindings_currentIndex);
-    search_keybindings_currentIndex = search_keybindings_resultLinks.length - 1;
-    console.log("└ targeting " + search_keybindings_currentIndex);
-    selectResult(search_keybindings_currentIndex);
+    console.log('│ current index is ' + search_keybindings_currentIndex)
+    search_keybindings_currentIndex = search_keybindings_resultLinks.length - 1
+    console.log('└ targeting ' + search_keybindings_currentIndex)
+    selectResult(search_keybindings_currentIndex)
 }
 
 /**
  * Activate search bar for text entry.
  */
 function selectSearchBar() {
-    search_keybindings_searchBar.focus();
-    console.log("└ targeting search bar");
+    search_keybindings_searchBar.focus()
+    console.log('└ targeting search bar')
 }
 
 /*
@@ -94,55 +87,58 @@ function escapeSearchBar() {
 }
 */
 
-window.addEventListener("keydown", checkKeyPressed, false);
+window.addEventListener('keydown', checkKeyPressed, false)
 
 /**
  * Identifies keycode of pressed key and runs specified procedure
  * @param {Event} e Keydown event
  */
 function checkKeyPressed(e) {
-    console.log("Key " + e.keyCode + " pressed.");
+    console.log(e.key + ' key pressed.')
 
-    let ae = document.activeElement;
-    console.log("│ Current active element is:");
-    console.log(ae);
-    let loc = search_keybindings_resultLinks.indexOf(ae);
+    let ae = document.activeElement
+    console.log('│ Current active element is:')
+    console.log(ae)
+    let loc = search_keybindings_resultLinks.indexOf(ae)
     if (loc >= 0) {
-        search_keybindings_currentIndex = loc;
+        search_keybindings_currentIndex = loc
     } else if (ae.isSameNode(search_keybindings_searchBar)) {
-        console.log("└ Search bar active, exiting.");
-        return;
+        console.log('└ Search bar active, exiting.')
+        return
     }
 
-    switch (e.keyCode) {
-        case search_keybindings_keyDown:
-            console.log("│ Key matches down key.");
+    /**
+     * Determines which key procedure to run
+     */
+    switch (e.key.toLowerCase()) {
+        case search_keybindings_getKeyBinding('keyDown'):
+            console.log('│ Key matches down key.');
             moveDown();
             break;
-        case search_keybindings_keyUp:
-            console.log("│ Key matches up key.");
+        case search_keybindings_getKeyBinding('keyUp'):
+            console.log('│ Key matches up key.');
             moveUp();
             break;
-        case search_keybindings_keySearchBar:
-            console.log("│ Key matches search key.");
+        case search_keybindings_getKeyBinding('keySearchBar'):
+            console.log('│ Key matches search key.');
             selectSearchBar();
             break;
             /*
-            case search_keybindings_keyEsc:
-            	console.log("│ Key matches escape key.");
-            	escapeSearchBar();
-            	break;
-            */
-        case search_keybindings_keyHigh:
-            console.log("│ Key matches high key.");
+                  case search_keybindings_getKeyBinding("keyEsc"):
+                  	console.log("│ Key matches escape key.");
+                  	escapeSearchBar();
+                  	break;
+                  */
+        case search_keybindings_getKeyBinding('keyHigh'):
+            console.log('│ Key matches high key.');
             moveHigh();
             break;
-        case search_keybindings_keyMiddle:
-            console.log("│ Key matches middle key.");
+        case search_keybindings_getKeyBinding('keyMiddle'):
+            console.log('│ Key matches middle key.');
             moveMiddle();
             break;
-        case search_keybindings_keyLow:
-            console.log("│ Key matches low key.");
+        case search_keybindings_getKeyBinding('keyLow'):
+            console.log('│ Key matches low key.');
             moveLow();
             break;
     }
@@ -154,13 +150,13 @@ document.addEventListener("DOMContentLoaded", indexResults()) {
 });
 */
 {
-    let resultListPane = document.getElementById(search_keybindings_siteMappingDictionary.get("sr-pane"));
-    let resultList = resultListPane.getElementsByTagName(search_keybindings_siteMappingDictionary.get("sr-hTag"));
+    let resultListPane = document.getElementById(search_keybindings_siteMappingDictionary.get('sr-pane'))
+    let resultList = resultListPane.getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-hTag'))
 
     for (var i = 0, len = resultList.length; i < len; i++) {
-        search_keybindings_resultLinks.push(resultList[i].getElementsByTagName(search_keybindings_siteMappingDictionary.get("sr-linkTag"))[0]);
+        search_keybindings_resultLinks.push(resultList[i].getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-linkTag'))[0])
     }
 
-    console.log(search_keybindings_resultLinks);
-    search_keybindings_searchBar = document.getElementById(search_keybindings_siteMappingDictionary.get("search-bar"));
+    console.log(search_keybindings_resultLinks)
+    search_keybindings_searchBar = document.getElementById(search_keybindings_siteMappingDictionary.get('search-bar'))
 }

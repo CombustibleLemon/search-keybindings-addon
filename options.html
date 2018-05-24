@@ -5,11 +5,15 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <style type="text/css">
+        body {
+            background-color: transparent;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-
         <form id="search_keybindings_settings">
             <!--
         <label>Down Key:<input type="number" id="keyDown" maxlength="3" /></label>
@@ -25,14 +29,14 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" disabled="disabled" checked="checked" disabled="disabled" checked="checked" aria-label="Checkbox for enabling down key">
+                                <input type="checkbox" aria-label="Checkbox for enabling down key">
                             </div>
                             <button class="btn btn-outline-secondary" type="button" aria-label="Detects preferred key automatically">Detect Key</button>
                         </div>
-                        <input type="number" readonly="readonly" class="form-control" aria-label="Input of key value" id="keyDown" />
+                        <input type="text" class="form-control" aria-label="Input of key value" id="keyDown" />
                     </div>
                 </div>
-                <span>Default: <kbd>j</kbd></span>
+                <span>Default: <kbd id="keyDown-default"></kbd></span>
             </div>
             <div class="form-group row">
                 <label for="basic-url" class="col-sm-3 col-form-label">Up Key</label>
@@ -40,14 +44,14 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" disabled="disabled" checked="checked" aria-label="Checkbox for enabling up key">
+                                <input type="checkbox" aria-label="Checkbox for enabling up key">
                             </div>
                             <button class="btn btn-outline-secondary" type="button" aria-label="Detects preferred key automatically">Detect Key</button>
                         </div>
-                        <input type="number" readonly="readonly" class="form-control" aria-label="Input of key value" id="keyUp" />
+                        <input type="text" class="form-control" aria-label="Input of key value" id="keyUp" />
                     </div>
                 </div>
-                <span>Default: <kbd>k</kbd></span>
+                <span>Default: <kbd id="keyUp-default"></kbd></span>
             </div>
             <div class="form-group row">
                 <label for="basic-url" class="col-sm-3 col-form-label">Search Key</label>
@@ -55,14 +59,14 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" disabled="disabled" checked="checked" aria-label="Checkbox for enabling search key">
+                                <input type="checkbox" aria-label="Checkbox for enabling search key">
                             </div>
                             <button class="btn btn-outline-secondary" type="button" aria-label="Detects preferred key automatically">Detect Key</button>
                         </div>
-                        <input type="number" readonly="readonly" class="form-control" aria-label="Input of key value" id="keySearchBar" />
+                        <input type="text" class="form-control" aria-label="Input of key value" id="keySearchBar" />
                     </div>
                 </div>
-                <span>Default: <kbd>/</kbd></span>
+                <span>Default: <kbd id="keySearchBar-default"></kbd></span>
             </div>
             <div class="form-group row">
                 <label for="basic-url" class="col-sm-3 col-form-label">High (top result) Key</label>
@@ -70,14 +74,14 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" disabled="disabled" checked="checked" aria-label="Checkbox for enabling high key">
+                                <input type="checkbox" aria-label="Checkbox for enabling high key">
                             </div>
                             <button class="btn btn-outline-secondary" type="button" aria-label="Detects preferred key automatically">Detect Key</button>
                         </div>
-                        <input type="number" readonly="readonly" class="form-control" aria-label="Input of key value" id="keyHigh" />
+                        <input type="text" class="form-control" aria-label="Input of key value" id="keyHigh" />
                     </div>
                 </div>
-                <span>Default: <kbd>h</kbd></span>
+                <span>Default: <kbd id="keyHigh-default"></kbd></span>
             </div>
             <div class="form-group row">
                 <label for="basic-url" class="col-sm-3 col-form-label">Middle Key</label>
@@ -85,14 +89,14 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" disabled="disabled" checked="checked" aria-label="Checkbox for enabling middle key">
+                                <input type="checkbox" aria-label="Checkbox for enabling middle key">
                             </div>
                             <button class="btn btn-outline-secondary" type="button" aria-label="Detects preferred key automatically">Detect Key</button>
                         </div>
-                        <input type="number" readonly="readonly" class="form-control" aria-label="Input of key value" id="keyMiddle" />
+                        <input type="text" class="form-control" aria-label="Input of key value" id="keyMiddle" />
                     </div>
                 </div>
-                <span>Default: <kbd>m</kbd></span>
+                <span>Default: <kbd id="keyMiddle-default"></kbd></span>
             </div>
             <div class="form-group row">
                 <label for="basic-url" class="col-sm-3 col-form-label">Low (bottom reult) Key</label>
@@ -100,20 +104,23 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" disabled="disabled" checked="checked" aria-label="Checkbox for enabling low key">
+                                <input type="checkbox" aria-label="Checkbox for enabling low key">
                             </div>
                             <button class="btn btn-outline-secondary" type="button" aria-label="Detects preferred key automatically">Detect Key</button>
                         </div>
-                        <input type="number" readonly="readonly" class="form-control" aria-label="Input of key value" id="keyLow" />
+                        <input type="text" class="form-control" aria-label="Input of key value" id="keyLow" />
                     </div>
                 </div>
-                <span>Default: <kbd>l</kbd></span>
+                <span>Default: <kbd id="keyLow-default"></kbd></span>
             </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="manualKeyCodes">
-                <label class="form-check-label" for="manualKeyCodes">Enable manual keycode input</label>
-            </div>
+            <!--
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="manualKeyCodes">
+            <label class="form-check-label" for="manualKeyCodes">Enable manual keycode input</label>
+        </div>
+        -->
             <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" id="restore-defaults">Restore Defaults</button>
         </form>
     </div>
 
