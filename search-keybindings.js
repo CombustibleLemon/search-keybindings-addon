@@ -113,32 +113,39 @@ function checkKeyPressed(e) {
     switch (e.key.toLowerCase()) {
         case search_keybindings_getKeyBinding('keyDown'):
             console.log('│ Key matches down key.');
+            e.preventDefault();
             moveDown();
             break;
         case search_keybindings_getKeyBinding('keyUp'):
             console.log('│ Key matches up key.');
+            e.preventDefault();
             moveUp();
             break;
         case search_keybindings_getKeyBinding('keySearchBar'):
             console.log('│ Key matches search key.');
+            e.preventDefault();
             selectSearchBar();
             break;
             /*
                   case search_keybindings_getKeyBinding("keyEsc"):
                   	console.log("│ Key matches escape key.");
+                cleanEvent(e);
                   	escapeSearchBar();
                   	break;
                   */
         case search_keybindings_getKeyBinding('keyHigh'):
             console.log('│ Key matches high key.');
+            e.preventDefault();
             moveHigh();
             break;
         case search_keybindings_getKeyBinding('keyMiddle'):
             console.log('│ Key matches middle key.');
+            e.preventDefault();
             moveMiddle();
             break;
         case search_keybindings_getKeyBinding('keyLow'):
             console.log('│ Key matches low key.');
+            e.preventDefault();
             moveLow();
             break;
     }
