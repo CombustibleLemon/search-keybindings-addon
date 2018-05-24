@@ -43,6 +43,7 @@ function restoreOptions() {
 function restoreDefaults() {
     for (i = 0; i < keyInputs.length; i++) {
         keyInputs[i].value = search_keybindings_getKeyBinding(keyInputs[i].id, true);
+        keyInputs[i].parentElement.querySelector("input[type=checkbox]").setAttribute("checked", "checked");
     }
 }
 
@@ -110,6 +111,10 @@ let test = new Promise(() => {
     });
 
     chrome.storage.local.get(optionKeys, function(items) {
+        if (items.keyDown === undefined) {
+            restoreDefaults();
+        }
+
         Object.keys(items).forEach(function(objKey, index) {
             var k = items[objKey];
             let val = k.key
