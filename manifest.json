@@ -2,7 +2,7 @@
     "author": "Dan Leonard",
     "manifest_version": 2,
     "name": "Search Result Keybindings",
-    "version": "1.0",
+    "version": "1.1",
 
     "description": "Creates keybindings for Google and other search result pages",
 
@@ -10,6 +10,7 @@
         "44": "icons/icon-44.png",
         "48": "icons/icon-48.png",
         "50": "icons/icon-50.png",
+        "54": "icons/icon-54.png",
         "128": "icons/icon-128.png",
         "150": "icons/icon-150.png",
         "176": "icons/icon-176.png"
