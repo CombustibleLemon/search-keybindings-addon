@@ -17,7 +17,7 @@
     },
 
     "content_scripts": [{
-        "matches": ["*://*.google.com/search*", "*://*.bing.com/search*", "*://*.duckduckgo.com/*", "*://*.github.com/search*", "*://*.baidu.com/s*"],
+        "matches": ["*://*.google.com/search*", "*://*.bing.com/search*", "*://*.duckduckgo.com/*", "*://*.baidu.com/s*"],
         "js": ["search-keybindings-bindings.js", "search-keybindings-searchSiteMappings.js", "search-keybindings.js"],
         "css": ["search-keybindings.css"]
     }],
