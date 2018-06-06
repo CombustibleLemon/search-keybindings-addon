@@ -2,7 +2,7 @@
     "author": "Dan Leonard",
     "manifest_version": 2,
     "name": "Search Result Keybindings",
-    "version": "1.2",
+    "version": "1.1",
 
     "description": "Creates keybindings for Google and other search result pages",
 
@@ -17,7 +17,7 @@
     },
 
     "content_scripts": [{
-        "matches": ["*://*.google.com/search*", "*://*.bing.com/search*", "*://*.duckduckgo.com/*", "*://*.github.com/search*", "*://*.baidu.com/s*"],
+        "matches": ["*://*.google.com/search*", "*://*.bing.com/search*", "*://*.duckduckgo.com/*", "*://*.baidu.com/s*"],
         "js": ["search-keybindings-bindings.js", "search-keybindings-searchSiteMappings.js", "search-keybindings.js"],
         "css": ["search-keybindings.css"]
     }],
