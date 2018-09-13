@@ -155,7 +155,6 @@ function checkKeyPressed (e) {
  * Test if an element in the HTML DOM is visible
  * @param {Node} obj A DOM element tested for visibility
  */
-/*
 function isVisible(obj) {
     if (obj == document) return true
     
@@ -186,7 +185,6 @@ function isVisible(obj) {
 
     return isVisible(obj.parentNode)
 }
-*/
 
 /*
 document.addEventListener("DOMContentLoaded", indexResults()) {
@@ -198,9 +196,9 @@ document.addEventListener("DOMContentLoaded", indexResults()) {
   let resultList = resultListPane.getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-hTag'))
 
   for (var i = 0, len = resultList.length; i < len; i++) {
-      var 
-	    if (resultList[i].getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-linkTag'))[0]) {
-        	search_keybindings_resultLinks.push(resultList[i].getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-linkTag'))[0])
+      var res = resultList[i].getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-linkTag'))[0];
+	    if (res && isVisible(res)) {
+        	search_keybindings_resultLinks.push(res)
 	    }
   }
 
