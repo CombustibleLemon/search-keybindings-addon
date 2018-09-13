@@ -151,6 +151,43 @@ function checkKeyPressed (e) {
   }
 }
 
+/**
+ * Test if an element in the HTML DOM is visible
+ * @param {Node} obj A DOM element tested for visibility
+ */
+/*
+function isVisible(obj) {
+    if (obj == document) return true
+    
+    if (!obj) return false
+
+    if (!obj.parentNode) return false
+    
+    if (obj.style) {
+        if (obj.style.display == 'none') return false
+        if (obj.style.visibility == 'hidden') return false
+    }
+
+    //Try the computed style in a standard way
+    if (window.getComputedStyle) {
+        var style = window.getComputedStyle(obj, "")
+
+        if (style.display == 'none') return false
+        if (style.visibility == 'hidden') return false
+    }
+
+    //Or get the computed style using IE's silly proprietary way
+    var style = obj.currentStyle
+
+    if (style) {
+        if (style['display'] == 'none') return false
+        if (style['visibility'] == 'hidden') return false
+    }
+
+    return isVisible(obj.parentNode)
+}
+*/
+
 /*
 document.addEventListener("DOMContentLoaded", indexResults()) {
     console.log("DOM fully loaded and parsed");
@@ -161,6 +198,7 @@ document.addEventListener("DOMContentLoaded", indexResults()) {
   let resultList = resultListPane.getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-hTag'))
 
   for (var i = 0, len = resultList.length; i < len; i++) {
+      var 
 	    if (resultList[i].getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-linkTag'))[0]) {
         	search_keybindings_resultLinks.push(resultList[i].getElementsByTagName(search_keybindings_siteMappingDictionary.get('sr-linkTag'))[0])
 	    }
