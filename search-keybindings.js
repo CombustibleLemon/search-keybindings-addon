@@ -102,7 +102,7 @@ function checkKeyPressed (e) {
   let loc = search_keybindings_resultLinks.indexOf(ae)
   if (loc >= 0) {
     search_keybindings_currentIndex = loc
-  } else if (ae.isSameNode(search_keybindings_searchBar)) {
+  } else if (ae.isSameNode(search_keybindings_searchBar) || ae.nodeName == 'INPUT') {
     console.log('└ Search bar active, exiting.')
     return
   }
@@ -203,5 +203,27 @@ document.addEventListener("DOMContentLoaded", indexResults()) {
   }
 
   console.log(search_keybindings_resultLinks)
-  search_keybindings_searchBar = document.getElementById(search_keybindings_siteMappingDictionary.get('search-bar'))
+  if (search_keybindings_siteMappingDictionary.get('search-bar-id')) {
+    //get node with certain id
+    search_keybindings_searchBar = document.getElementById(search_keybindings_siteMappingDictionary.get('search-bar-id'));
+    console.log('Located search bar:');
+    console.log(search_keybindings_searchBar);
+  }
+  else if (search_keybindings_siteMappingDictionary.get('search-bar-name')) {
+    //get NodeList of nodes with certain name
+    let sbname = search_keybindings_siteMappingDictionary.get('search-bar-name');
+    let poss = document.getElementsByName(sbname);
+    //find input
+    for (var i = 0, len = poss.length; i < len; i++) {
+      if (poss[i].nodeName == 'INPUT') {
+        search_keybindings_searchBar = poss[i]
+        console.log('Located search bar:');
+        console.log(search_keybindings_searchBar);
+        break;
+      }
+    }
+  }
+  else {
+    console.log('Search bar not located.')
+  }
 }
